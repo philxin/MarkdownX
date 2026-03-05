@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal 风格</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <style>
+    body {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      line-height: 1.5;
+      color: #50fa7b;
+      background-color: #282a36;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .markdown-body {
+      max-width: 100%;
+      padding: 40px;
+      box-sizing: border-box;
+      background-color: #282a36;
+      border-radius: 3px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .markdown-body h1 {
+      font-size: 2em;
+      margin-top: 0;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+      color: #ff79c6;
+      border-bottom: 1px solid #44475a;
+      padding-bottom: 0.3em;
+    }
+    
+    .markdown-body h2 {
+      font-size: 1.5em;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+      color: #ff79c6;
+      border-bottom: 1px solid #44475a;
+      padding-bottom: 0.3em;
+    }
+    
+    .markdown-body h3 {
+      font-size: 1.25em;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+      color: #ff79c6;
+    }
+    
+    .markdown-body p {
+      margin-top: 0;
+      margin-bottom: 1em;
+    }
+    
+    .markdown-body a {
+      color: #8be9fd;
+      text-decoration: none;
+    }
+    
+    .markdown-body a:hover {
+      text-decoration: underline;
+    }
+    
+    .markdown-body code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 85%;
+      padding: 0.2em 0.4em;
+      margin: 0;
+      background-color: #44475a;
+      border-radius: 3px;
+      color: #f1fa8c;
+    }
+    
+    .markdown-body pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 85%;
+      line-height: 1.45;
+      overflow: auto;
+      padding: 16px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      background-color: #44475a;
+      border-radius: 3px;
+    }
+    
+    .markdown-body pre code {
+      background-color: transparent;
+      padding: 0;
+      color: #f1fa8c;
+    }
+
+    /* 覆盖 highlight.js 样式以匹配主题 */
+    .markdown-body pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 0;
+      background: transparent;
+    }
+    
+    .markdown-body blockquote {
+      margin: 0;
+      padding: 0 1em;
+      color: #bd93f9;
+      border-left: 3px solid #44475a;
+    }
+    
+    .markdown-body ul, .markdown-body ol {
+      padding-left: 2em;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    
+    .markdown-body li {
+      margin-bottom: 0.25em;
+    }
+    
+    .markdown-body table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    
+    .markdown-body table th, .markdown-body table td {
+      padding: 6px 13px;
+      border: 1px solid #44475a;
+    }
+    
+    .markdown-body table th {
+      font-weight: 600;
+      background-color: #44475a;
+      color: #f8f8f2;
+    }
+    
+    .markdown-body img {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .markdown-body hr {
+      height: 1px;
+      padding: 0;
+      margin: 24px 0;
+      background-color: #44475a;
+      border: 0;
+    }
+    
+    /* 添加终端风格的光标闪烁效果 */
+    .markdown-body::after {
+      content: "_";
+      display: inline-block;
+      animation: blink 1s step-end infinite;
+      color: #50fa7b;
+      font-weight: bold;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    /* 添加终端风格的命令前缀 */
+    .markdown-body::before {
+      content: "$ ";
+      color: #ff79c6;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="markdown-body">
+    <%- content %>
+  </div>
+</body>
+</html>

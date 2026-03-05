@@ -1,0 +1,61 @@
+{
+  "name": "markdown-snapper-mcp",
+  "version": "1.0.0",
+  "description": "将Markdown文档转换为精美图片的MCP服务器",
+  "tools": [
+    {
+      "name": "markdown-to-image",
+      "description": "将Markdown文本转换为精美图片，支持多种风格模板",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "markdown": {
+            "type": "string",
+            "description": "Markdown文本内容"
+          },
+          "theme": {
+            "type": "string",
+            "description": "图片主题风格",
+            "enum": ["notion", "terminal", "paper", "memo", "card", "dark", "minimal"],
+            "default": "notion"
+          },
+          "format": {
+            "type": "string",
+            "description": "输出图片格式",
+            "enum": ["png", "jpeg"],
+            "default": "png"
+          },
+          "width": {
+            "type": "integer",
+            "description": "图片宽度 (像素)",
+            "default": 800
+          },
+          "height": {
+            "type": "integer",
+            "description": "图片高度 (像素)",
+            "default": 600
+          },
+          "quality": {
+            "type": "integer",
+            "description": "图片质量 (1-100)",
+            "default": 90
+          }
+        },
+        "required": ["markdown"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "description": "生成的图片URL"
+          }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "markdown-to-image": "/mcp/markdown-to-image"
+  },
+  "metadata_endpoint": "/mcp/metadata"
+}

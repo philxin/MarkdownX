@@ -1,0 +1,64 @@
+{
+  "mcpServers": {
+    "markdown-snapper": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@markdown-snapper/mcp-server@1.0.0"
+      ],
+      "env": {},
+      "tools": [
+        {
+          "name": "markdown-to-image",
+          "description": "将 Markdown 文本转换为精美图片，支持多种风格模板",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "markdown": {
+                "type": "string",
+                "description": "Markdown 文本内容"
+              },
+              "theme": {
+                "type": "string",
+                "description": "图片主题风格",
+                "enum": ["notion", "terminal", "paper"],
+                "default": "notion"
+              },
+              "format": {
+                "type": "string",
+                "description": "输出图片格式",
+                "enum": ["png", "jpeg"],
+                "default": "png"
+              },
+              "width": {
+                "type": "integer",
+                "description": "图片宽度 (像素)",
+                "default": 800
+              },
+              "height": {
+                "type": "integer",
+                "description": "图片高度 (像素)",
+                "default": 600
+              }
+            },
+            "required": ["markdown"]
+          },
+          "returns": {
+            "type": "object",
+            "properties": {
+              "imageUrl": {
+                "type": "string",
+                "description": "生成的图片URL"
+              }
+            }
+          }
+        }
+      ],
+      "endpoints": {
+        "markdown-to-image": "/mcp/markdown-to-image"
+      },
+      "metadata_endpoint": "/mcp/metadata",
+      "health_endpoint": "/health"
+    }
+  }
+}
