@@ -1,0 +1,92 @@
+server {
+    listen 80;
+    server_name your-domain.com;  # 替换为实际域名或服务器IP
+
+    # 文件上传大小限制
+    client_max_body_size 10M;
+
+    # API 代理
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+
+        # 超时设置（Puppeteer 渲染可能需要时间）
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+    # 静态文件服务（生成的图片）
+    location /outputs/ {
+        alias /var/www/MarkdownX/server/outputs/;  # 替换为实际部署路径
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+
+        # 允许的文件类型
+        location ~* \.(png|jpg|jpeg)$ {
+            try_files $uri =404;
+        }
+    }
+
+    # 访问日志
+    access_log /var/log/nginx/markdownx_access.log;
+    error_log /var/log/nginx/markdownx_error.log;
+}
+
+# HTTPS 配置示例（使用 Let's Encrypt）
+# 取消注释并配置 SSL 证书后使用
+#
+# server {
+#     listen 443 ssl http2;
+#     server_name your-domain.com;
+#
+#     ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+#     ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+#     ssl_protocols TLSv1.2 TLSv1.3;
+#     ssl_ciphers HIGH:!aNULL:!MD5;
+#
+#     client_max_body_size 10M;
+#
+#     location / {
+#         proxy_pass http://localhost:3000;
+#         proxy_http_version 1.1;
+#         proxy_set_header Upgrade $http_upgrade;
+#         proxy_set_header Connection 'upgrade';
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Real-IP $remote_addr;
+#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#         proxy_set_header X-Forwarded-Proto $scheme;
+#         proxy_cache_bypass $http_upgrade;
+#
+#         proxy_connect_timeout 60s;
+#         proxy_send_timeout 60s;
+#         proxy_read_timeout 60s;
+#     }
+#
+#     location /outputs/ {
+#         alias /var/www/MarkdownX/server/outputs/;
+#         expires 7d;
+#         add_header Cache-Control "public, immutable";
+#
+#         location ~* \.(png|jpg|jpeg)$ {
+#             try_files $uri =404;
+#         }
+#     }
+#
+#     access_log /var/log/nginx/markdownx_access.log;
+#     error_log /var/log/nginx/markdownx_error.log;
+# }
+#
+# # HTTP 重定向到 HTTPS
+# server {
+#     listen 80;
+#     server_name your-domain.com;
+#     return 301 https://$server_name$request_uri;
+# }

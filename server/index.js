@@ -44,8 +44,8 @@ app.get('/health', (req, res) => {
 });
 
 // 启动服务器
-app.listen(port, () => {
-  console.log(`Markdown Snapper MCP服务器运行在 http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Markdown Snapper MCP服务器运行在 http://0.0.0.0:${port}`);
   console.log(`健康检查: http://localhost:${port}/health`);
   console.log(`API文档: http://localhost:${port}/api/docs`);
 });

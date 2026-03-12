@@ -191,12 +191,14 @@ router.post('/generate-image', upload.single('markdown'), async (req, res) => {
     const markdownContent = fs.readFileSync(uploadedFilePath, 'utf-8');
 
     // 获取请求参数
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     const options = {
       theme: req.body.theme || 'notion',
       format: req.body.format || 'png',
       width: parseInt(req.body.width) || 800,
       height: parseInt(req.body.height) || 600,
-      quality: parseInt(req.body.quality) || 90
+      quality: parseInt(req.body.quality) || 90,
+      baseUrl: baseUrl
     };
 
     // 生成图片
@@ -239,12 +241,14 @@ router.post('/generate-from-text', express.json(), async (req, res) => {
     }
 
     // 获取请求参数
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     const options = {
       theme: req.body.theme || 'notion',
       format: req.body.format || 'png',
       width: parseInt(req.body.width) || 800,
       height: parseInt(req.body.height) || 600,
-      quality: parseInt(req.body.quality) || 90
+      quality: parseInt(req.body.quality) || 90,
+      baseUrl: baseUrl
     };
 
     // 生成图片
@@ -273,6 +277,7 @@ router.post('/generate-from-text', express.json(), async (req, res) => {
 // 获取生成的图片列表
 router.get('/images', (req, res) => {
   try {
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     const outputsDir = path.join(__dirname, '..', 'outputs');
     const files = fs.readdirSync(outputsDir)
       .filter(file => {
@@ -284,7 +289,8 @@ router.get('/images', (req, res) => {
         const stats = fs.statSync(filePath);
         return {
           filename: file,
-          url: `/outputs/${file}`,
+          url: `${baseUrl}/outputs/${file}`,
+          relativeUrl: `/outputs/${file}`,
           size: stats.size,
           created: stats.birthtime,
           modified: stats.mtime

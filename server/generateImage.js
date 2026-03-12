@@ -51,7 +51,8 @@ async function generateImage(markdownContent, options = {}) {
     format = 'png',
     width = 800,
     height = 600,
-    quality = 90
+    quality = 90,
+    baseUrl = ''  // 新增：服务器基础URL
   } = options;
 
   // 转换Markdown为HTML
@@ -115,11 +116,13 @@ async function generateImage(markdownContent, options = {}) {
     fs.unlinkSync(tempHtmlPath);
 
     // 返回相对路径（用于URL）和绝对路径
+    const relativeUrl = `/outputs/${outputFilename}`;
     return {
       filename: outputFilename,
       relativePath: path.join('outputs', outputFilename),
       absolutePath: path.resolve(outputPath),
-      url: `/outputs/${outputFilename}`
+      url: baseUrl ? `${baseUrl}${relativeUrl}` : relativeUrl,  // 如果有baseUrl则返回完整URL
+      relativeUrl: relativeUrl  // 始终保留相对URL
     };
   } finally {
     await browser.close();

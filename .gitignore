@@ -119,11 +119,11 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-server/outputs/
-server/uploads/
-*.png
-*.jpeg
-*.jpg
+server/outputs/*.png
+server/outputs/*.jpg
+server/outputs/*.jpeg
+server/outputs/temp-*.html
+server/outputs/uploads/
 
 # Test files (comment out if you want to keep them in repo)
 # test_*.js
